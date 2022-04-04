@@ -6,9 +6,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
-gem "rails", github: "rails/rails"
-gem "arel", github: "rails/arel"
-gem "rack", github: "rack/rack"
+if ENV["RAILS_VERSION"].nil? || (ENV["RAILS_VERSION"] == "edge")
+  gem "rails", github: "rails/rails"
+else
+  gem "rails", "~> #{ENV["RAILS_VERSION"]}.0"
+end
 
 group :development do
   platform :ruby do
