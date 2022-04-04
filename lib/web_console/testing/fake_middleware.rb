@@ -22,7 +22,11 @@ module WebConsole
       end
 
       def view
-        @view = View.new(@view_path)
+        @view = if ActionView::VERSION::MAJOR >= 6
+          View.with_empty_template_cache.with_view_paths([@view_path])
+        else
+          View.new(@view_path)
+        end
       end
 
       private
